@@ -2,21 +2,12 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@functions/*": [
-        "src/functions/*"
-      ],
-      "@libs/*": [
-        "src/libs/*"
-      ],
-      "@ports/*": [
-        "src/ports/*"
-      ],
-      "@schemas/*": [
-        "src/schemas/*"
-      ],
-      "@resources/*": [
-        "Resources/*"
-      ]
+      "@functions/*": ["src/functions/*"],
+      "@libs/*": ["src/libs/*"],
+      "@pipes/*": ["src/pipes/*"],
+      "@types/*": ["src/types/*"],
+      "@resources/*": ["src/resources/*"],
+      "@schemas/*": ["src/schemas/*"]
     }
   }
 }

@@ -1,33 +1,32 @@
-import type { AWS } from '@serverless/typescript';
+import type { AWS } from "@serverless/typescript";
 
-import hello from '@ports/hello';
-import getAll from '@ports/getAll';
-import getURL from '@ports/getURL';
-import createURL from '@ports/createURL';
-import usersTable from '@resources/usersTable';
-import URLTable from '@resources/URLTable';
-
+import * as functions from "@pipes/index";
+import * as dynamoDBTables from "@resources/dynamoDBTables";
 
 const serverlessConfiguration: AWS = {
-  service: 'example-sls',
-  frameworkVersion: '2',
-  plugins: ['serverless-esbuild', 'serverless-dynamodb-local', 'serverless-offline'],
+  service: "example-sls",
+  frameworkVersion: "2",
+  plugins: [
+    "serverless-esbuild",
+    "serverless-dynamodb-local",
+    "serverless-offline",
+  ],
   provider: {
-    name: 'aws',
-    runtime: 'nodejs14.x',
+    name: "aws",
+    runtime: "nodejs14.x",
     apiGateway: {
       minimumCompressionSize: 1024,
       shouldStartNameWithService: true,
     },
     environment: {
-      AWS_NODEJS_CONNECTION_REUSE_ENABLED: '1',
-      NODE_OPTIONS: '--enable-source-maps --stack-trace-limit=1000',
+      AWS_NODEJS_CONNECTION_REUSE_ENABLED: "1",
+      NODE_OPTIONS: "--enable-source-maps --stack-trace-limit=1000",
     },
-    lambdaHashingVersion: '20201221',
+    lambdaHashingVersion: "20201221",
   },
-  functions: { hello, getAll, getURL, createURL },
+  functions,
   resources: {
-    Resources: { usersTable, URLTable }
+    Resources: { ...dynamoDBTables },
   },
   package: { individually: true },
   custom: {
@@ -35,16 +34,16 @@ const serverlessConfiguration: AWS = {
       bundle: true,
       minify: false,
       sourcemap: true,
-      exclude: ['aws-sdk'],
-      target: 'node14',
-      define: { 'require.resolve': undefined },
-      platform: 'node',
+      exclude: ["aws-sdk"],
+      target: "node14",
+      define: { "require.resolve": undefined },
+      platform: "node",
       concurrency: 10,
     },
     dynamodb: {
-      stages: ['dev'],
+      stages: ["dev"],
       // inMemory: true
-    }
+    },
   },
 };
 
